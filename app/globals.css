@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/* ── Brand tokens ─────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --bg: #0b0f12;
+  --surface: #0f151a;
+  --surface-2: #131b21;
+
+  /* Ink */
+  --ink: #f2f3f4;
+  --muted: #b8c0c6;
+  --muted2: #8f9aa3;
+
+  /* Strokes */
+  --stroke: rgba(255, 255, 255, 0.12);
+  --stroke2: rgba(255, 255, 255, 0.18);
+
+  /* Accent (quiet, premium brass) */
+  --accent: #c8b48a;
+  --accent2: #a49472;
+
+  /* Radius */
+  --r-lg: 18px;
+  --r-xl: 28px;
+
+  /* Shadow */
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+
+  /* Type scale */
+  --h1: clamp(2.25rem, 4vw, 4rem);
+  --h2: clamp(1.6rem, 2.4vw, 2.4rem);
+  --h3: clamp(1.25rem, 1.7vw, 1.6rem);
+  --p: 1.05rem;
+}
+
+/* ── Tailwind v4 theme extension ───────────────────── */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-muted2: var(--muted2);
+  --color-accent: var(--accent);
+  --color-accent2: var(--accent2);
+  --font-sans: "Inter", ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-serif: Georgia, "Iowan Old Style", "Times New Roman", ui-serif, serif;
+  --radius-xl: var(--r-xl);
+  --radius-lg: var(--r-lg);
+  --shadow-soft: var(--shadow);
+}
+
+/* ── Base styles ───────────────────────────────────── */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: radial-gradient(
+      1200px 600px at 70% 10%,
+      rgba(200, 180, 138, 0.14),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 500px at 15% 25%,
+      rgba(255, 255, 255, 0.06),
+      transparent 60%
+    ),
+    var(--bg);
+  color: var(--ink);
+  text-rendering: optimizeLegibility;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: rgba(200, 180, 138, 0.28);
+}
+
+a {
+  color: inherit;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid rgba(200, 180, 138, 0.7);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+/* ── Cinematic grain overlay ───────────────────────── */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.18;
+}
+
+/* ── Premium scrollbar ─────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(200, 180, 138, 0.25);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 180, 138, 0.4);
+}
+
+/* Firefox */
+html {
+  scrollbar-color: rgba(200, 180, 138, 0.25) transparent;
+  scrollbar-width: thin;
+}
+
+/* ── Section dividers ──────────────────────────────── */
+.divider-fade {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(200, 180, 138, 0.2) 30%,
+    rgba(200, 180, 138, 0.2) 70%,
+    transparent
+  );
+}
+
+/* ── Glassmorphism card variant ────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ── Subtle image vignette for hero images ─────────── */
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 120px 40px rgba(11, 15, 18, 0.5);
+}
+
+/* ── Smooth image reveal animation ─────────────────── */
+@keyframes image-reveal {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-image-reveal {
+  animation: image-reveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ── Reduced motion ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
